@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/category_family"
+    android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalLine"
+                app:srcCompat="@drawable/number_one"
+                android:background="@color/tan_background"
+                />
+
+            <TextView
+                android:id="@+id/miwokLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lutti"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageIcon"
+                android:layout_marginTop="15sp"
+                android:layout_marginStart="12sp"
+                />
+
+            <TextView
+                android:id="@+id/englishLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="one"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="12sp"
+                android:layout_marginBottom="15sp"
+                app:layout_constraintStart_toEndOf="@+id/imageIcon"
+                app:layout_constraintTop_toBottomOf="@+id/miwokLanguage"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalLine"
+                />
+
+            <ImageView
+                android:id="@+id/playImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_play_arrow_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="15dp"
+                app:tint="@color/white"
+                />
+            <View
+                android:id="@+id/horizontalLine"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/tab_Default_color"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
