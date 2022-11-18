@@ -23,62 +23,6 @@ class DataSource(context: Context) {
         bindNumbersData(context)
     }
 
-    private val colorSounds = intArrayOf(
-        R.raw.color_red, R.raw.color_mustard_yellow, R.raw.color_dusty_yellow, R.raw.color_green,
-        R.raw.color_brown, R.raw.color_gray, R.raw.color_black, R.raw.color_white
-    )
-
-    private val familySounds = intArrayOf(
-        R.raw.family_father,
-        R.raw.family_mother,
-        R.raw.family_son,
-        R.raw.family_daughter,
-        R.raw.family_older_brother,
-        R.raw.family_younger_brother,
-        R.raw.family_older_sister,
-        R.raw.family_younger_sister,
-        R.raw.family_grandmother,
-        R.raw.family_grandfather
-    )
-
-    private val numberImages = intArrayOf(
-        R.drawable.number_one,
-        R.drawable.number_two,
-        R.drawable.number_three,
-        R.drawable.number_four,
-        R.drawable.number_five,
-        R.drawable.number_six,
-        R.drawable.number_seven,
-        R.drawable.number_eight,
-        R.drawable.number_nine,
-        R.drawable.number_ten
-    )
-    private val numberSounds = intArrayOf(
-        R.raw.number_one,
-        R.raw.number_two,
-        R.raw.number_three,
-        R.raw.number_four,
-        R.raw.number_five,
-        R.raw.number_six,
-        R.raw.number_seven,
-        R.raw.number_eight,
-        R.raw.number_nine,
-        R.raw.number_ten
-    )
-
-    private val phrasesSounds = intArrayOf(
-        R.raw.phrase_where_are_you_going,
-        R.raw.phrase_what_is_your_name,
-        R.raw.phrase_my_name_is,
-        R.raw.phrase_how_are_you_feeling,
-        R.raw.phrase_im_feeling_good,
-        R.raw.phrase_are_you_coming,
-        R.raw.phrase_yes_im_coming,
-        R.raw.phrase_im_coming,
-        R.raw.phrase_lets_go,
-        R.raw.phrase_come_here
-    )
-
     private fun bindColorsData(context: Context) {
         val miwokColors = context.resources.getStringArray(R.array.miwok_colors)
         val englishColors = context.resources.getStringArray(R.array.english_colors)
@@ -92,10 +36,13 @@ class DataSource(context: Context) {
             R.drawable.color_black,
             R.drawable.color_white
         )
-        Log.i("dzanin", miwokColors.size.toString())
+        val colorSounds = intArrayOf(
+            R.raw.color_red, R.raw.color_mustard_yellow, R.raw.color_dusty_yellow, R.raw.color_green,
+            R.raw.color_brown, R.raw.color_gray, R.raw.color_black, R.raw.color_white
+        )
         // Binds all the data necessary for Colors to the respective model.
         for(i in miwokColors.indices){
-            colorsModels?.add(BaseModel(miwokColors[i],englishColors[i],colorImages[i]))
+            colorsModels?.add(BaseModel(miwokColors[i],englishColors[i],colorSounds[i],colorImages[i]))
         }
     }
 
@@ -114,9 +61,21 @@ class DataSource(context: Context) {
             R.drawable.family_grandmother,
             R.drawable.family_grandfather
         )
+        val familySounds = intArrayOf(
+            R.raw.family_father,
+            R.raw.family_mother,
+            R.raw.family_son,
+            R.raw.family_daughter,
+            R.raw.family_older_brother,
+            R.raw.family_younger_brother,
+            R.raw.family_older_sister,
+            R.raw.family_younger_sister,
+            R.raw.family_grandmother,
+            R.raw.family_grandfather
+        )
         // Binds all the data necessary for Families to the respective model.
         for(i in miwokFamily.indices){
-            familyModels?.add(BaseModel(miwokFamily[i],englishFamily[i],familyImages[i]))
+            familyModels?.add(BaseModel(miwokFamily[i],englishFamily[i],familySounds[i],familyImages[i]))
         }
     }
 
@@ -135,18 +94,42 @@ class DataSource(context: Context) {
             R.drawable.number_nine,
             R.drawable.number_ten
         )
+        val numberSounds = intArrayOf(
+            R.raw.number_one,
+            R.raw.number_two,
+            R.raw.number_three,
+            R.raw.number_four,
+            R.raw.number_five,
+            R.raw.number_six,
+            R.raw.number_seven,
+            R.raw.number_eight,
+            R.raw.number_nine,
+            R.raw.number_ten
+        )
         // Binds all the data necessary for Numbers to the respective model.
         for(i in miwokNumbers.indices){
-            numbersModels?.add(BaseModel(miwokNumbers[i],englishNumbers[i],numberImages[i]))
+            numbersModels?.add(BaseModel(miwokNumbers[i],englishNumbers[i],numberSounds[i],numberImages[i]))
         }
     }
 
     private fun bindPhrasesData(context: Context) {
-        val miwokPhrases = context.resources.getStringArray(R.array.family_miwok)
+        val miwokPhrases = context.resources.getStringArray(R.array.miwok_phrases)
         val englishPhrases = context.resources.getStringArray(R.array.english_phrases)
+        val phrasesSounds = intArrayOf(
+            R.raw.phrase_where_are_you_going,
+            R.raw.phrase_what_is_your_name,
+            R.raw.phrase_my_name_is,
+            R.raw.phrase_how_are_you_feeling,
+            R.raw.phrase_im_feeling_good,
+            R.raw.phrase_are_you_coming,
+            R.raw.phrase_yes_im_coming,
+            R.raw.phrase_im_coming,
+            R.raw.phrase_lets_go,
+            R.raw.phrase_come_here
+        )
         // Binds all the data necessary for Phrases to the respective model.
         for(i in miwokPhrases.indices){
-            phrasesModels?.add(BaseModel(miwokPhrases[i],englishPhrases[i]))
+            phrasesModels?.add(BaseModel(miwokPhrases[i],englishPhrases[i],phrasesSounds[i]))
         }
     }
 
