@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miwokkotlin.adapters.BaseAdapter
-import com.example.miwokkotlin.adapters.FamilyAdapter
 import com.example.miwokkotlin.models.BaseModel
-import com.example.miwokkotlin.models.FamilyModel
 
 class FamilyFragment : Fragment() {
 

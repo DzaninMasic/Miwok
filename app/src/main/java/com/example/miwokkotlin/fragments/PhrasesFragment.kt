@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miwokkotlin.adapters.BaseAdapter
-import com.example.miwokkotlin.adapters.PhrasesAdapter
 import com.example.miwokkotlin.models.BaseModel
-import com.example.miwokkotlin.models.PhrasesModel
 
 class PhrasesFragment : Fragment() {
     var phrasesModels: ArrayList<BaseModel> = ArrayList()
