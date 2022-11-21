@@ -30,6 +30,15 @@ class BaseFragment(val data: ArrayList<BaseModel>?) : Fragment(), BaseAdapter.On
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
+    }
+
     override fun onItemClick(position: Int) {
         if (mediaPlayer?.isPlaying == true) {
             mediaPlayer?.stop()
