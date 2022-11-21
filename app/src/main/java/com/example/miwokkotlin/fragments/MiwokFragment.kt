@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miwokkotlin.R
-import com.example.miwokkotlin.adapters.BaseAdapter
-import com.example.miwokkotlin.models.BaseModel
+import com.example.miwokkotlin.adapters.MiwokAdapter
+import com.example.miwokkotlin.models.MiwokModel
 
-class BaseFragment(val data: ArrayList<BaseModel>?) : Fragment(), BaseAdapter.OnItemListener {
+class MiwokFragment(val data: ArrayList<MiwokModel>?) : Fragment(), MiwokAdapter.OnItemListener {
     var mediaPlayer: MediaPlayer? = MediaPlayer()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class BaseFragment(val data: ArrayList<BaseModel>?) : Fragment(), BaseAdapter.On
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView= view.findViewById(R.id.myRecyclerView)
 
-        val adapter = data?.let { BaseAdapter(requireContext(), it, this) }
+        val adapter = data?.let { MiwokAdapter(requireContext(), it, this) }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }

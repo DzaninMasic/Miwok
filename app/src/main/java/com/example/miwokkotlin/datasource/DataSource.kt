@@ -1,16 +1,15 @@
 package com.example.miwokkotlin.datasource
 
 import android.content.Context
-import android.util.Log
 import com.example.miwokkotlin.R
-import com.example.miwokkotlin.models.BaseModel
+import com.example.miwokkotlin.models.MiwokModel
 
 class DataSource(context: Context) {
 
-    var colorsModels: ArrayList<BaseModel>? = null
-    var familyModels: ArrayList<BaseModel>? = null
-    var numbersModels: ArrayList<BaseModel>? = null
-    var phrasesModels: ArrayList<BaseModel>? = null
+    var colorsModels: ArrayList<MiwokModel>? = null
+    var familyModels: ArrayList<MiwokModel>? = null
+    var numbersModels: ArrayList<MiwokModel>? = null
+    var phrasesModels: ArrayList<MiwokModel>? = null
 
     init {
         colorsModels = ArrayList()
@@ -42,7 +41,7 @@ class DataSource(context: Context) {
         )
         // Binds all the data necessary for Colors to the respective model.
         for(i in miwokColors.indices){
-            colorsModels?.add(BaseModel(miwokColors[i],englishColors[i],colorSounds[i],colorImages[i]))
+            colorsModels?.add(MiwokModel(miwokColors[i],englishColors[i],colorSounds[i],colorImages[i]))
         }
     }
 
@@ -75,7 +74,7 @@ class DataSource(context: Context) {
         )
         // Binds all the data necessary for Families to the respective model.
         for(i in miwokFamily.indices){
-            familyModels?.add(BaseModel(miwokFamily[i],englishFamily[i],familySounds[i],familyImages[i]))
+            familyModels?.add(MiwokModel(miwokFamily[i],englishFamily[i],familySounds[i],familyImages[i]))
         }
     }
 
@@ -108,7 +107,7 @@ class DataSource(context: Context) {
         )
         // Binds all the data necessary for Numbers to the respective model.
         for(i in miwokNumbers.indices){
-            numbersModels?.add(BaseModel(miwokNumbers[i],englishNumbers[i],numberSounds[i],numberImages[i]))
+            numbersModels?.add(MiwokModel(miwokNumbers[i],englishNumbers[i],numberSounds[i],numberImages[i]))
         }
     }
 
@@ -129,7 +128,7 @@ class DataSource(context: Context) {
         )
         // Binds all the data necessary for Phrases to the respective model.
         for(i in miwokPhrases.indices){
-            phrasesModels?.add(BaseModel(miwokPhrases[i],englishPhrases[i],phrasesSounds[i]))
+            phrasesModels?.add(MiwokModel(miwokPhrases[i],englishPhrases[i],phrasesSounds[i]))
         }
     }
 

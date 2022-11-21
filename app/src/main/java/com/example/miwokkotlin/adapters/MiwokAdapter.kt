@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miwokkotlin.R
-import com.example.miwokkotlin.models.BaseModel
+import com.example.miwokkotlin.models.MiwokModel
 
-class BaseAdapter(val context: Context, val baseModels: ArrayList<BaseModel>, val onItemListener: OnItemListener): RecyclerView.Adapter<BaseAdapter.TestViewHolder>() {
+class MiwokAdapter(val context: Context, val miwokModels: ArrayList<MiwokModel>, val onItemListener: OnItemListener): RecyclerView.Adapter<MiwokAdapter.TestViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestViewHolder {
         val layoutInflater = LayoutInflater.from(context)
@@ -20,13 +20,13 @@ class BaseAdapter(val context: Context, val baseModels: ArrayList<BaseModel>, va
     }
 
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
-        holder.miwokLanguage.text = baseModels[position].miwokLanguage
-        holder.englishLanguage.text = baseModels[position].englishLanguage
-        if(baseModels[position].image == null){
+        holder.miwokLanguage.text = miwokModels[position].miwokLanguage
+        holder.englishLanguage.text = miwokModels[position].englishLanguage
+        if(miwokModels[position].image == null){
             holder.image.isVisible = false
         }
         else{
-            baseModels[position].image?.let { image ->
+            miwokModels[position].image?.let { image ->
                 holder.image.setImageResource(image)
             }
         }
@@ -34,7 +34,7 @@ class BaseAdapter(val context: Context, val baseModels: ArrayList<BaseModel>, va
     }
 
     override fun getItemCount(): Int {
-        return baseModels.size
+        return miwokModels.size
     }
 
     class TestViewHolder(itemView: View, onItemListener: OnItemListener) : RecyclerView.ViewHolder(itemView){

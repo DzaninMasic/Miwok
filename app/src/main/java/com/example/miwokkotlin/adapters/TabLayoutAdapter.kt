@@ -10,10 +10,10 @@ class TabLayoutAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
     val data = DataSource(fragmentActivity)
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> BaseFragment(data.numbersModels)
-            1 -> BaseFragment(data.familyModels)
-            2 -> BaseFragment(data.colorsModels)
-            3 -> BaseFragment(data.phrasesModels)
+            0 -> MiwokFragment(data.numbersModels)
+            1 -> MiwokFragment(data.familyModels)
+            2 -> MiwokFragment(data.colorsModels)
+            3 -> MiwokFragment(data.phrasesModels)
             else -> throw Exception("Unknown fragment.")
         }
     }
