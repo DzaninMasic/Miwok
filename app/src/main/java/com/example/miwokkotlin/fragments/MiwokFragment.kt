@@ -16,18 +16,20 @@ import com.example.miwokkotlin.adapters.MiwokAdapter
 import com.example.miwokkotlin.datasource.DataSource
 import com.example.miwokkotlin.models.MiwokModel
 
-class MiwokFragment private constructor(val data: ArrayList<MiwokModel>?) : Fragment(), MiwokAdapter.OnItemListener {
+class MiwokFragment() : Fragment(), MiwokAdapter.OnItemListener {
     var mediaPlayer: MediaPlayer? = MediaPlayer()
+    private var data: ArrayList<MiwokModel>? = arrayListOf<MiwokModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_miwok, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView: RecyclerView= view.findViewById(R.id.myRecyclerView)
+        val recyclerView: RecyclerView = view.findViewById(R.id.myRecyclerView)
+
+        data = this.arguments?.getParcelableArrayList(ELEMENTS)
 
         val adapter = data?.let { MiwokAdapter(requireContext(), it, this) }
         recyclerView.adapter = adapter
@@ -49,28 +51,46 @@ class MiwokFragment private constructor(val data: ArrayList<MiwokModel>?) : Frag
             mediaPlayer?.release()
             mediaPlayer = null
         }
-        mediaPlayer = data?.get(position)?.let { MediaPlayer.create(requireContext(), it.sound) }
+        mediaPlayer = data?.get(position).let { it?.let { it1 -> MediaPlayer.create(requireContext(), it1.sound) } }
         mediaPlayer?.start()
     }
 
     //.create companion object
     companion object {
-        fun create(context: Context, test: MiwokEnum):Fragment{
+        fun create(context: Context, test: MiwokEnum): Fragment {
             val data = DataSource(context)
-            when(test) {
+            val bundle = Bundle()
+            val fragment: MiwokFragment
+
+
+            when (test) {
                 MiwokEnum.NUMBERS -> {
-                    return MiwokFragment(data.numbersModels)
+                    bundle.putParcelableArrayList(ELEMENTS, data.numbersModels)
+                    fragment = MiwokFragment()
+                    fragment.arguments = bundle
+                    return fragment
                 }
                 MiwokEnum.FAMILY -> {
-                    return MiwokFragment(data.familyModels)
+                    bundle.putParcelableArrayList(ELEMENTS, data.familyModels)
+                    fragment = MiwokFragment()
+                    fragment.arguments = bundle
+                    return fragment
                 }
                 MiwokEnum.COLORS -> {
-                    return MiwokFragment(data.colorsModels)
+                    bundle.putParcelableArrayList(ELEMENTS, data.colorsModels)
+                    fragment = MiwokFragment()
+                    fragment.arguments = bundle
+                    return fragment
                 }
                 MiwokEnum.PHRASES -> {
-                    return MiwokFragment(data.phrasesModels)
+                    bundle.putParcelableArrayList(ELEMENTS, data.phrasesModels)
+                    fragment = MiwokFragment()
+                    fragment.arguments = bundle
+                    return fragment
                 }
             }
         }
+
+        const val ELEMENTS = "elements"
     }
 }
