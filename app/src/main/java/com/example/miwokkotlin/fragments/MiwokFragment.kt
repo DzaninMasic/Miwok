@@ -1,18 +1,22 @@
 package com.example.miwokkotlin.fragments
 
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.miwokkotlin.MiwokEnum
 import com.example.miwokkotlin.R
 import com.example.miwokkotlin.adapters.MiwokAdapter
+import com.example.miwokkotlin.datasource.DataSource
 import com.example.miwokkotlin.models.MiwokModel
 
-class MiwokFragment(val data: ArrayList<MiwokModel>?) : Fragment(), MiwokAdapter.OnItemListener {
+class MiwokFragment private constructor(val data: ArrayList<MiwokModel>?) : Fragment(), MiwokAdapter.OnItemListener {
     var mediaPlayer: MediaPlayer? = MediaPlayer()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -49,4 +53,24 @@ class MiwokFragment(val data: ArrayList<MiwokModel>?) : Fragment(), MiwokAdapter
         mediaPlayer?.start()
     }
 
+    //.create companion object
+    companion object {
+        fun create(context: Context, test: MiwokEnum):Fragment{
+            val data = DataSource(context)
+            when(test) {
+                MiwokEnum.NUMBERS -> {
+                    return MiwokFragment(data.numbersModels)
+                }
+                MiwokEnum.FAMILY -> {
+                    return MiwokFragment(data.familyModels)
+                }
+                MiwokEnum.COLORS -> {
+                    return MiwokFragment(data.colorsModels)
+                }
+                MiwokEnum.PHRASES -> {
+                    return MiwokFragment(data.phrasesModels)
+                }
+            }
+        }
+    }
 }
