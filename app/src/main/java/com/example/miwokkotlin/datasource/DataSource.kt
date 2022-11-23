@@ -2,6 +2,8 @@ package com.example.miwokkotlin.datasource
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import com.example.miwokkotlin.MiwokEnum
 import com.example.miwokkotlin.R
 import com.example.miwokkotlin.models.MiwokModel
 
@@ -22,6 +24,43 @@ class DataSource(context: Context) {
         bindFamilyData(context)
         bindNumbersData(context)
     }
+
+    fun getData(value: MiwokEnum?): ArrayList<MiwokModel>? {
+        return when(value){
+            MiwokEnum.NUMBERS -> numbersModels
+            MiwokEnum.FAMILY -> familyModels
+            MiwokEnum.COLORS -> colorsModels
+            MiwokEnum.PHRASES -> phrasesModels
+            else -> {throw Exception("Unknown fragment.")}
+        }
+    }
+
+    /*companion object{
+        fun getData(context: Context, value: Bundle): ArrayList<MiwokModel>? {
+            val bundledData = value.get("DATA")
+            val data = DataSource(context)
+
+            when(bundledData){
+                MiwokEnum.NUMBERS -> {
+                    Log.i("NUMBERS", bundledData.toString())
+                    return data.numbersModels
+                }
+                MiwokEnum.FAMILY -> {
+                    Log.i("FAMILY", bundledData.toString())
+                    return data.familyModels
+                }
+                MiwokEnum.COLORS -> {
+                    Log.i("COLORS", bundledData.toString())
+                    return data.colorsModels
+                }
+                MiwokEnum.PHRASES -> {
+                    Log.i("PHRASES", bundledData.toString())
+                    return data.phrasesModels
+                }
+            }
+            return null
+        }
+    }*/
 
     private fun bindColorsData(context: Context) {
         val miwokColors = context.resources.getStringArray(R.array.miwok_colors)

@@ -3,6 +3,7 @@ package com.example.miwokkotlin.fragments
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,8 @@ import com.example.miwokkotlin.datasource.DataSource
 import com.example.miwokkotlin.models.MiwokModel
 
 class MiwokFragment() : Fragment(), MiwokAdapter.OnItemListener {
-    var mediaPlayer: MediaPlayer? = MediaPlayer()
+    private var mediaPlayer: MediaPlayer? = MediaPlayer()
+    private var dataSource: DataSource? = null
     private var data: ArrayList<MiwokModel>? = arrayListOf<MiwokModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,7 +31,17 @@ class MiwokFragment() : Fragment(), MiwokAdapter.OnItemListener {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = view.findViewById(R.id.myRecyclerView)
 
-        data = this.arguments?.getParcelableArrayList(ELEMENTS)
+        dataSource = DataSource(requireContext())
+
+        val unBundled = this.arguments?.get("DATA")
+
+        var type: MiwokEnum? = null
+        if (unBundled is MiwokEnum){
+            type = unBundled
+            Log.i("TAG", unBundled.toString())
+        }
+
+        data= dataSource?.getData(type)
 
         val adapter = data?.let { MiwokAdapter(requireContext(), it, this) }
         recyclerView.adapter = adapter
@@ -57,40 +69,54 @@ class MiwokFragment() : Fragment(), MiwokAdapter.OnItemListener {
 
     //.create companion object
     companion object {
-        fun create(context: Context, test: MiwokEnum): Fragment {
-            val data = DataSource(context)
+        fun create(test: MiwokEnum): Fragment {
             val bundle = Bundle()
             val fragment: MiwokFragment
 
-
-            when (test) {
-                MiwokEnum.NUMBERS -> {
-                    bundle.putParcelableArrayList(ELEMENTS, data.numbersModels)
-                    fragment = MiwokFragment()
-                    fragment.arguments = bundle
-                    return fragment
-                }
-                MiwokEnum.FAMILY -> {
-                    bundle.putParcelableArrayList(ELEMENTS, data.familyModels)
-                    fragment = MiwokFragment()
-                    fragment.arguments = bundle
-                    return fragment
-                }
-                MiwokEnum.COLORS -> {
-                    bundle.putParcelableArrayList(ELEMENTS, data.colorsModels)
-                    fragment = MiwokFragment()
-                    fragment.arguments = bundle
-                    return fragment
-                }
-                MiwokEnum.PHRASES -> {
-                    bundle.putParcelableArrayList(ELEMENTS, data.phrasesModels)
-                    fragment = MiwokFragment()
-                    fragment.arguments = bundle
-                    return fragment
-                }
-            }
+            bundle.putSerializable("DATA",test)
+            fragment = MiwokFragment()
+            fragment.arguments = bundle
+            return fragment
         }
-
-        const val ELEMENTS = "elements"
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*when (test) {
+    MiwokEnum.NUMBERS -> {
+        bundle.putParcelableArrayList(ELEMENTS, data.numbersModels)
+        fragment = MiwokFragment()
+        fragment.arguments = bundle
+        return fragment
+    }
+    MiwokEnum.FAMILY -> {
+        bundle.putParcelableArrayList(ELEMENTS, data.familyModels)
+        fragment = MiwokFragment()
+        fragment.arguments = bundle
+        return fragment
+    }
+    MiwokEnum.COLORS -> {
+        bundle.putParcelableArrayList(ELEMENTS, data.colorsModels)
+        fragment = MiwokFragment()
+        fragment.arguments = bundle
+        return fragment
+    }
+    MiwokEnum.PHRASES -> {
+        bundle.putParcelableArrayList(ELEMENTS, data.phrasesModels)
+        fragment = MiwokFragment()
+        fragment.arguments = bundle
+        return fragment
+    }
+}*/

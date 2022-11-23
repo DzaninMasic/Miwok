@@ -11,10 +11,10 @@ class TabLayoutAdapter(val fragmentActivity: FragmentActivity) : FragmentStateAd
     //val data = DataSource(fragmentActivity)
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> MiwokFragment.create(fragmentActivity, MiwokEnum.NUMBERS)
-            1 -> MiwokFragment.create(fragmentActivity, MiwokEnum.FAMILY)
-            2 -> MiwokFragment.create(fragmentActivity, MiwokEnum.COLORS)
-            3 -> MiwokFragment.create(fragmentActivity, MiwokEnum.PHRASES)
+            0 -> MiwokFragment.create(MiwokEnum.NUMBERS)
+            1 -> MiwokFragment.create(MiwokEnum.FAMILY)
+            2 -> MiwokFragment.create(MiwokEnum.COLORS)
+            3 -> MiwokFragment.create(MiwokEnum.PHRASES)
             else -> throw Exception("Unknown fragment.")
         }
     }
