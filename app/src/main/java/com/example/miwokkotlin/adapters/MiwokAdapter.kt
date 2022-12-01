@@ -11,21 +11,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.miwokkotlin.R
 import com.example.miwokkotlin.models.MiwokModel
 
-class MiwokAdapter(val context: Context, val miwokModels: ArrayList<MiwokModel>, val onItemListener: OnItemListener): RecyclerView.Adapter<MiwokAdapter.TestViewHolder>() {
+class MiwokAdapter(
+    val context: Context,
+    val miwokModels: ArrayList<MiwokModel>,
+    val onItemListener: OnItemListener
+) : RecyclerView.Adapter<MiwokAdapter.TestViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestViewHolder {
         val layoutInflater = LayoutInflater.from(context)
-        var itemView = layoutInflater.inflate(R.layout.item_view,parent,false)
+        val itemView = layoutInflater.inflate(R.layout.item_view, parent, false)
         return TestViewHolder(itemView, onItemListener)
     }
 
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
-        holder.miwokLanguage.text = miwokModels[position].miwokLanguage
-        holder.englishLanguage.text = miwokModels[position].englishLanguage
-        if(miwokModels[position].image == null){
+        val miwokLanguageArray =
+            context.resources.getStringArray(miwokModels[position].miwokLanguageArrayId)
+        val englishLanguageArray =
+            context.resources.getStringArray(miwokModels[position].englishLanguageArrayId)
+        holder.miwokLanguage.text = miwokLanguageArray[position]
+        holder.englishLanguage.text = englishLanguageArray[position]
+        if (miwokModels[position].image == null) {
             holder.image.isVisible = false
-        }
-        else{
+        } else {
             miwokModels[position].image?.let { image ->
                 holder.image.setImageResource(image)
             }
@@ -37,7 +44,8 @@ class MiwokAdapter(val context: Context, val miwokModels: ArrayList<MiwokModel>,
         return miwokModels.size
     }
 
-    class TestViewHolder(itemView: View, onItemListener: OnItemListener) : RecyclerView.ViewHolder(itemView){
+    class TestViewHolder(itemView: View, onItemListener: OnItemListener) :
+        RecyclerView.ViewHolder(itemView) {
         var miwokLanguage: TextView
         var englishLanguage: TextView
         var image: ImageView
@@ -46,13 +54,13 @@ class MiwokAdapter(val context: Context, val miwokModels: ArrayList<MiwokModel>,
             miwokLanguage = itemView.findViewById(R.id.miwokLanguage)
             englishLanguage = itemView.findViewById(R.id.englishLanguage)
             image = itemView.findViewById(R.id.imageIcon)
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 onItemListener.onItemClick(adapterPosition)
             }
         }
     }
 
-    interface OnItemListener{
+    interface OnItemListener {
         fun onItemClick(position: Int)
     }
 }

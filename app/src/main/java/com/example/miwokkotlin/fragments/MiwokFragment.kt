@@ -1,9 +1,6 @@
 package com.example.miwokkotlin.fragments
 
-import android.content.Context
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.miwokkotlin.CategoryView
 import com.example.miwokkotlin.MiwokEnum
 import com.example.miwokkotlin.R
 import com.example.miwokkotlin.adapters.MiwokAdapter
-import com.example.miwokkotlin.datasource.DataSource
 import com.example.miwokkotlin.models.MiwokModel
+import com.example.miwokkotlin.presenters.MiwokPresenter
 
-class MiwokFragment() : Fragment(), MiwokAdapter.OnItemListener {
-    private var mediaPlayer: MediaPlayer? = MediaPlayer()
-    private var dataSource: DataSource? = null
-    private var data: ArrayList<MiwokModel>? = arrayListOf<MiwokModel>()
+
+class MiwokFragment: Fragment(), MiwokAdapter.OnItemListener, CategoryView {
+    private var recyclerView: RecyclerView? = null
+    private var presenter: MiwokPresenter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -29,9 +27,7 @@ class MiwokFragment() : Fragment(), MiwokAdapter.OnItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView: RecyclerView = view.findViewById(R.id.myRecyclerView)
-
-        dataSource = DataSource(requireContext())
+        recyclerView = view.findViewById(R.id.myRecyclerView)
 
         val unBundled = this.arguments?.get("DATA")
 
@@ -41,42 +37,34 @@ class MiwokFragment() : Fragment(), MiwokAdapter.OnItemListener {
             Log.i("TAG", unBundled.toString())
         }
 
-        data= dataSource?.getData(type)
-
-        val adapter = data?.let { MiwokAdapter(requireContext(), it, this) }
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        presenter = MiwokPresenter(requireContext(),this)
+        presenter?.getData(type)
     }
 
     override fun onPause() {
         super.onPause()
-        if (mediaPlayer?.isPlaying == true) {
-            mediaPlayer?.stop()
-            mediaPlayer?.release()
-            mediaPlayer = null
-        }
+        presenter?.pauseMedia()
     }
 
     override fun onItemClick(position: Int) {
-        if (mediaPlayer?.isPlaying == true) {
-            mediaPlayer?.stop()
-            mediaPlayer?.release()
-            mediaPlayer = null
-        }
-        mediaPlayer = data?.get(position).let { it?.let { it1 -> MediaPlayer.create(requireContext(), it1.sound) } }
-        mediaPlayer?.start()
+        presenter?.playMedia(position)
     }
 
     //.create companion object
     companion object {
+        // Change "test"
         fun create(test: MiwokEnum): Fragment {
             val bundle = Bundle()
-            val fragment: MiwokFragment
-
             bundle.putSerializable("DATA",test)
-            fragment = MiwokFragment()
+            val fragment = MiwokFragment()
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    override fun showData(data: ArrayList<MiwokModel>) {
+        val adapter = MiwokAdapter(requireContext(), data, this)
+        recyclerView?.adapter = adapter
+        recyclerView?.layoutManager = LinearLayoutManager(requireContext())
     }
 }

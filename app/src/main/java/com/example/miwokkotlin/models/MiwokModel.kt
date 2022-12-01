@@ -4,4 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MiwokModel(var miwokLanguage: String, var englishLanguage: String, var sound: Int, var image: Int?=null): Parcelable
+data class MiwokModel(
+    var miwokLanguageArrayId: Int,
+    var englishLanguageArrayId: Int,
+    var sound: Int,
+    var image: Int? = null
+) : Parcelable

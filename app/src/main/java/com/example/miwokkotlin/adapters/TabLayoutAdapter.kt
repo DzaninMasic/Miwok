@@ -7,7 +7,8 @@ import com.example.miwokkotlin.MiwokEnum
 import com.example.miwokkotlin.datasource.DataSource
 import com.example.miwokkotlin.fragments.*
 
-class TabLayoutAdapter(val fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class TabLayoutAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> MiwokFragment.create(MiwokEnum.NUMBERS)

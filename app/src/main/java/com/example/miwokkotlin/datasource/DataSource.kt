@@ -1,70 +1,39 @@
 package com.example.miwokkotlin.datasource
 
-import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import com.example.miwokkotlin.MiwokEnum
 import com.example.miwokkotlin.R
 import com.example.miwokkotlin.models.MiwokModel
 
-class DataSource(context: Context) {
+class DataSource {
 
-    var colorsModels: ArrayList<MiwokModel>? = null
-    var familyModels: ArrayList<MiwokModel>? = null
-    var numbersModels: ArrayList<MiwokModel>? = null
-    var phrasesModels: ArrayList<MiwokModel>? = null
+    var colorsModels: ArrayList<MiwokModel> = arrayListOf()
+    var familyModels: ArrayList<MiwokModel> = arrayListOf()
+    var numbersModels: ArrayList<MiwokModel> = arrayListOf()
+    var phrasesModels: ArrayList<MiwokModel> = arrayListOf()
 
     init {
-        colorsModels = ArrayList()
-        familyModels = ArrayList()
-        numbersModels = ArrayList()
-        phrasesModels = ArrayList()
-        bindColorsData(context)
-        bindPhrasesData(context)
-        bindFamilyData(context)
-        bindNumbersData(context)
+        bindColorsData()
+        bindPhrasesData()
+        bindFamilyData()
+        bindNumbersData()
     }
 
+    // This isn't good, it shouldn't return null. In case of no data, return empty.
     fun getData(value: MiwokEnum?): ArrayList<MiwokModel>? {
-        return when(value){
+        return when (value) {
             MiwokEnum.NUMBERS -> numbersModels
             MiwokEnum.FAMILY -> familyModels
             MiwokEnum.COLORS -> colorsModels
             MiwokEnum.PHRASES -> phrasesModels
-            else -> {throw Exception("Unknown fragment.")}
+            else -> {
+                throw Exception("Unknown fragment.")
+            }
         }
     }
 
-    /*companion object{
-        fun getData(context: Context, value: Bundle): ArrayList<MiwokModel>? {
-            val bundledData = value.get("DATA")
-            val data = DataSource(context)
-
-            when(bundledData){
-                MiwokEnum.NUMBERS -> {
-                    Log.i("NUMBERS", bundledData.toString())
-                    return data.numbersModels
-                }
-                MiwokEnum.FAMILY -> {
-                    Log.i("FAMILY", bundledData.toString())
-                    return data.familyModels
-                }
-                MiwokEnum.COLORS -> {
-                    Log.i("COLORS", bundledData.toString())
-                    return data.colorsModels
-                }
-                MiwokEnum.PHRASES -> {
-                    Log.i("PHRASES", bundledData.toString())
-                    return data.phrasesModels
-                }
-            }
-            return null
-        }
-    }*/
-
-    private fun bindColorsData(context: Context) {
-        val miwokColors = context.resources.getStringArray(R.array.miwok_colors)
-        val englishColors = context.resources.getStringArray(R.array.english_colors)
+    private fun bindColorsData() {
+        val miwokColors = R.array.miwok_colors
+        val englishColors = R.array.english_colors
         val colorImages = intArrayOf(
             R.drawable.color_red,
             R.drawable.color_mustard_yellow,
@@ -80,14 +49,14 @@ class DataSource(context: Context) {
             R.raw.color_brown, R.raw.color_gray, R.raw.color_black, R.raw.color_white
         )
         // Binds all the data necessary for Colors to the respective model.
-        for(i in miwokColors.indices){
-            colorsModels?.add(MiwokModel(miwokColors[i],englishColors[i],colorSounds[i],colorImages[i]))
+        for(i in colorImages.indices){
+            colorsModels?.add(MiwokModel(miwokColors, englishColors, colorSounds[i], colorImages[i]))
         }
     }
 
-    private fun bindFamilyData(context: Context) {
-        val miwokFamily = context.resources.getStringArray(R.array.family_miwok)
-        val englishFamily = context.resources.getStringArray(R.array.family_english)
+    private fun bindFamilyData() {
+        val miwokFamily = R.array.family_miwok
+        val englishFamily = R.array.family_english
         val familyImages = intArrayOf(
             R.drawable.family_father,
             R.drawable.family_mother,
@@ -113,14 +82,14 @@ class DataSource(context: Context) {
             R.raw.family_grandfather
         )
         // Binds all the data necessary for Families to the respective model.
-        for(i in miwokFamily.indices){
-            familyModels?.add(MiwokModel(miwokFamily[i],englishFamily[i],familySounds[i],familyImages[i]))
+        for(i in familyImages.indices){
+            familyModels?.add(MiwokModel(miwokFamily,englishFamily,familySounds[i],familyImages[i]))
         }
     }
 
-    private fun bindNumbersData(context: Context) {
-        val miwokNumbers = context.resources.getStringArray(R.array.numbers_miwok)
-        val englishNumbers = context.resources.getStringArray(R.array.numbers_english)
+    private fun bindNumbersData() {
+        val miwokNumbers = R.array.numbers_miwok
+        val englishNumbers = R.array.numbers_english
         val numberImages = intArrayOf(
             R.drawable.number_one,
             R.drawable.number_two,
@@ -146,14 +115,14 @@ class DataSource(context: Context) {
             R.raw.number_ten
         )
         // Binds all the data necessary for Numbers to the respective model.
-        for(i in miwokNumbers.indices){
-            numbersModels?.add(MiwokModel(miwokNumbers[i],englishNumbers[i],numberSounds[i],numberImages[i]))
+        for(i in numberImages.indices){
+            numbersModels?.add(MiwokModel(miwokNumbers,englishNumbers,numberSounds[i],numberImages[i]))
         }
     }
 
-    private fun bindPhrasesData(context: Context) {
-        val miwokPhrases = context.resources.getStringArray(R.array.miwok_phrases)
-        val englishPhrases = context.resources.getStringArray(R.array.english_phrases)
+    private fun bindPhrasesData() {
+        val miwokPhrases = R.array.miwok_phrases
+        val englishPhrases = R.array.english_phrases
         val phrasesSounds = intArrayOf(
             R.raw.phrase_where_are_you_going,
             R.raw.phrase_what_is_your_name,
@@ -167,8 +136,8 @@ class DataSource(context: Context) {
             R.raw.phrase_come_here
         )
         // Binds all the data necessary for Phrases to the respective model.
-        for(i in miwokPhrases.indices){
-            phrasesModels?.add(MiwokModel(miwokPhrases[i],englishPhrases[i],phrasesSounds[i]))
+        for(i in phrasesSounds.indices){
+            phrasesModels?.add(MiwokModel(miwokPhrases, englishPhrases, phrasesSounds[i]))
         }
     }
 
