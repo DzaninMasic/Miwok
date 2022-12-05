@@ -10,12 +10,16 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.miwokkotlin.adapters.TabLayoutAdapter
+import com.example.miwokkotlin.datasource.DataSource
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)

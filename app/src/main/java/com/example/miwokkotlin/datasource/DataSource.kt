@@ -3,6 +3,7 @@ package com.example.miwokkotlin.datasource
 import com.example.miwokkotlin.MiwokEnum
 import com.example.miwokkotlin.R
 import com.example.miwokkotlin.models.MiwokModel
+import javax.inject.Inject
 
 class DataSource {
 

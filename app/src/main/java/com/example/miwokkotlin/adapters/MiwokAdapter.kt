@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miwokkotlin.R
+import com.example.miwokkotlin.datasource.DataSource
 import com.example.miwokkotlin.models.MiwokModel
 
 class MiwokAdapter(
@@ -28,6 +29,8 @@ class MiwokAdapter(
             context.resources.getStringArray(miwokModels[position].miwokLanguageArrayId)
         val englishLanguageArray =
             context.resources.getStringArray(miwokModels[position].englishLanguageArrayId)
+        val sounds = miwokModels[position].sound
+        holder.sound = sounds
         holder.miwokLanguage.text = miwokLanguageArray[position]
         holder.englishLanguage.text = englishLanguageArray[position]
         if (miwokModels[position].image == null) {
@@ -49,18 +52,19 @@ class MiwokAdapter(
         var miwokLanguage: TextView
         var englishLanguage: TextView
         var image: ImageView
+        var sound: Int = 0
 
         init {
             miwokLanguage = itemView.findViewById(R.id.miwokLanguage)
             englishLanguage = itemView.findViewById(R.id.englishLanguage)
             image = itemView.findViewById(R.id.imageIcon)
             itemView.setOnClickListener {
-                onItemListener.onItemClick(adapterPosition)
+                onItemListener.onItemClick(adapterPosition, sound)
             }
         }
     }
 
     interface OnItemListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(position: Int, sound: Int)
     }
 }

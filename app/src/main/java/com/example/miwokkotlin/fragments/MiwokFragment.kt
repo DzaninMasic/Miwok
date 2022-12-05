@@ -1,5 +1,6 @@
 package com.example.miwokkotlin.fragments
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,13 +13,18 @@ import com.example.miwokkotlin.CategoryView
 import com.example.miwokkotlin.MiwokEnum
 import com.example.miwokkotlin.R
 import com.example.miwokkotlin.adapters.MiwokAdapter
+import com.example.miwokkotlin.datasource.DataSource
 import com.example.miwokkotlin.models.MiwokModel
 import com.example.miwokkotlin.presenters.MiwokPresenter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
-class MiwokFragment: Fragment(), MiwokAdapter.OnItemListener, CategoryView {
+@AndroidEntryPoint
+class MiwokFragment : Fragment(), MiwokAdapter.OnItemListener, CategoryView {
     private var recyclerView: RecyclerView? = null
-    private var presenter: MiwokPresenter? = null
+    private var mediaPlayer: MediaPlayer? = null
+    @Inject
+    lateinit var presenter: MiwokPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -37,17 +43,33 @@ class MiwokFragment: Fragment(), MiwokAdapter.OnItemListener, CategoryView {
             Log.i("TAG", unBundled.toString())
         }
 
-        presenter = MiwokPresenter(requireContext(),this)
-        presenter?.getData(type)
+//        presenter = MiwokPresenter()
+        presenter.attachView(this)
+        presenter.getData(type)
     }
 
     override fun onPause() {
         super.onPause()
-        presenter?.pauseMedia()
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
     }
 
-    override fun onItemClick(position: Int) {
-        presenter?.playMedia(position)
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.destroy()
+    }
+
+    override fun onItemClick(position: Int, sound: Int) {
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
+        mediaPlayer = MediaPlayer.create(requireContext(), sound)
+        mediaPlayer?.start()
     }
 
     //.create companion object
